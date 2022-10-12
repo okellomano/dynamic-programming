@@ -1,12 +1,25 @@
 
+from ast import arg
+
+
+def cached(f):
+    """
+    A cache decorator for the fibonacci function.
+    """
+    cache = {}
+
+    def worker(*args):
+        if args not in cache:
+            cache[args] = f(*args)
+        return cache[args]
+    return worker
+
+
+@cached
 def fibonacci(n):
     if n <= 2:
         return 1
-    if not hasattr(fibonacci, 'cache'):
-        fibonacci.cache = {}
-    if n not in fibonacci.cache:
-        fibonacci.cache[n] = fibonacci(n - 1) + fibonacci(n - 2)
-    return fibonacci.cache[n]
+    return fibonacci(n - 1) + fibonacci(n - 2)
 
 
 if __name__ == '__main__':
