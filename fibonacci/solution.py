@@ -1,21 +1,8 @@
 
-from ast import arg
+from functools import lru_cache
 
 
-def cached(f):
-    """
-    A cache decorator for the fibonacci function.
-    """
-    cache = {}
-
-    def worker(*args):
-        if args not in cache:
-            cache[args] = f(*args)
-        return cache[args]
-    return worker
-
-
-@cached
+@lru_cache(maxsize=None)
 def fibonacci(n):
     if n <= 2:
         return 1
